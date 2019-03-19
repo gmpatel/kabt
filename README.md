@@ -1,5 +1,7 @@
 # kabt | the answer to the test
 
+![Gopher](https://static1.squarespace.com/static/5c4ea9d5697a985352030ac6/5c4ea9feaa4a99273255562d/5c4fb8c9aa4a990c63cdba02/1549821309986/4kheader.png?format=1500w)
+
 In simple point form write down what you see is wrong with the code. Please explain WHY you think it is wrong and how you would rectify it.
 
 For the question/test code sample given please refer to the following file.
@@ -8,11 +10,9 @@ For the question/test code sample given please refer to the following file.
 repository:\\question\go-test-kablamo.docx
 ```
 
-![Gopher](https://static1.squarespace.com/static/5c4ea9d5697a985352030ac6/5c4ea9feaa4a99273255562d/5c4fb8c9aa4a990c63cdba02/1549821309986/4kheader.png?format=1500w)
+## func main() | Problems
 
-## func main()
-
-### for i := 1; i <= 1000000000
+### for i := 1; i <= 1000000000 | Problems
 
 * Within this loop, we are calling `go func()` with each iterations of the for loop. But the `go func()` is accessing the `i` straight from the loop, meaning while the `go func()` is about to use `i` the value of `i` may be iterated and increased many times. So, here we are not assuring that the each time loop is iterating, we are triggering one `go func()` with the value of `i` at the time of that iteration.
 
@@ -22,7 +22,7 @@ repository:\\question\go-test-kablamo.docx
 
 * **`Solution`** can be to wrap `for i := 1; i <= 1000000000` itself within the `go func()` and iterate through `i` and push the value of `i` and push them throgu the `jobs` channel. That way we are pushing one `int` and holding the one `go func()` until that pushed `int` get consumed. And putting `for i := 1; i <= 1000000000` within the `go func()` will allow the code control flow of `main` to be progressed straight away before even starting the `for i := 1; i <= 1000000000`.
 
-### close(jobs)
+### close(jobs) | Problems
 
 * After the `for i := 1; i <= 1000000000` we are calling `close(jobs)` which will straight away close the `jobs` channel after looping through the for loop. So there are chances for lots of triggered `go func()` by the for loop will try then send the value of `i` over the closed channel and that will cause the `panic` and the program will be terminated.
 
