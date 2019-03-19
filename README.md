@@ -12,7 +12,7 @@ In simple point form write down what you see is wrong with the code. Please expl
 
 * Another problem in this loop is that we are pushing the value of `i` over the `jobs` channel in each triggered `go func()` which is a blocking statement meaning that particular `go func()` will not complete until someone is listening to that channel and consumes the value pushed by the each `go func()`. Meaning at the end of `1000000000` iterations we have `1000000000 go func()` are in memory holding their threads and waiting for the consumption of the pushed value for the thread to be completed. System will be very very slow. And the program will only progress to consume after for loop with `1000000000` iterations finished.
 
-* `Solution` can be to wrap `for i := 1; i <= 1000000000` itself within the `go func()` and iterate through `i` and push the value of `i` and push them throgu the `jobs` channel. That way we are pushing one `int` and holding the one `go func()` until that pushed `int` get consumed. And putting `for i := 1; i <= 1000000000` within the `go func()` will allow the code control flow of `main` to be progressed straight away before even starting the `for i := 1; i <= 1000000000`.
+* **`Solution`** can be to wrap `for i := 1; i <= 1000000000` itself within the `go func()` and iterate through `i` and push the value of `i` and push them throgu the `jobs` channel. That way we are pushing one `int` and holding the one `go func()` until that pushed `int` get consumed. And putting `for i := 1; i <= 1000000000` within the `go func()` will allow the code control flow of `main` to be progressed straight away before even starting the `for i := 1; i <= 1000000000`.
 
 ### close(jobs)
 
