@@ -72,7 +72,7 @@ defer close(jobs)
 
 * **`Solution`** can be something like this...
 
-**`Remove the following block of code`**
+    **`Remove the following block of code`**
 
     ```
     jobs2 := []int{}
@@ -81,7 +81,7 @@ defer close(jobs)
     }
     ```
 
-**`And change the following block of code`**
+    **`And change the following block of code`**
 
     ```
     for i := range jobs2 {
@@ -89,24 +89,24 @@ defer close(jobs)
     }
     ```
 
-**`To`**
+    **`To`**
 
-```
-for w := 1; w < 1000; w++ {
-    go worker(jobs, results)
-}
-```
+    ```
+    for w := 1; w < 1000; w++ {
+        go worker(jobs, results)
+    }
+    ```
 
-**`And also remove the {id} parameter from the func worker()`**
+    **`And also remove the {id} parameter from the func worker()`**
 
-**`From`**,
+    **`From`**,
 
-```
-func worker(id int, jobs <-chan int, results chan<- int)
-```
+    ```
+    func worker(id int, jobs <-chan int, results chan<- int)
+    ```
 
-**`To`**
+    **`To`**
 
-```
-func worker(jobs <-chan int, results chan<- int)
-```
+    ```
+    func worker(jobs <-chan int, results chan<- int)
+    ```
