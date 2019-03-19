@@ -51,14 +51,14 @@ defer close(jobs)
 
 * **`Solution`** can be more than one but the quick and neat one can be to use `defer close(results)` instead of `close(results)` which will ensure that the `results` channel will only be closed at the end of the `main()`. For clean code point of view you can declare `defer close(results)` straight after the declaration of `results` channel `results := make(chan int)`.
 
-```
-results := make(chan int)
-defer close(results)
-.
-..
-.
-// close(results)
-```
+    ```
+    results := make(chan int)
+    defer close(results)
+    .
+    ..
+    .
+    // close(results)
+    ```
 
 ### var sum int32 = 0 | Problems
 
@@ -74,20 +74,20 @@ defer close(results)
 
 **`Remove the following block of code`**
 
-```
-jobs2 := []int{}
-for w := 1; w < 1000; w++ {
-    jobs2 = append(jobs2, w)
-}
-```
+    ```
+    jobs2 := []int{}
+    for w := 1; w < 1000; w++ {
+        jobs2 = append(jobs2, w)
+    }
+    ```
 
 **`And change the following block of code`**
 
-```
-for i := range jobs2 {
-    go worker(jobs2[i], jobs, results)
-}
-```
+    ```
+    for i := range jobs2 {
+        go worker(jobs2[i], jobs, results)
+    }
+    ```
 
 **`To`**
 
