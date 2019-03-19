@@ -8,7 +8,7 @@ For the question/test code sample given please refer to the following file.
 repository:\\question\go-test-kablamo.docx
 ```
 
-![Image of Yaktocat](https://cdn-images-1.medium.com/max/1600/1*P0sFFyitrn2MxBeDrnir4Q.png)
+![Gopher](https://static1.squarespace.com/static/5c4ea9d5697a985352030ac6/5c4ea9feaa4a99273255562d/5c4fb8c9aa4a990c63cdba02/1549821309986/4kheader.png?format=1500w)
 
 ## func main()
 
