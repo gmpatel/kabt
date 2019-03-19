@@ -7,6 +7,7 @@ func main() {
 	defer close(jobs)
 
 	results := make(chan int)
+	defer close(results)
 
 	go func() {
 		for i := 1; i <= 1000; i++ {
@@ -17,23 +18,20 @@ func main() {
 			jobs <- i
 		}
 	}()
-	
+
 	jobs2 := []int{}
 	for w := 1; w < 1000; w++ {
 		jobs2 = append(jobs2, w)
 	}
 
-	for i, w := range jobs2 {
-		go worker(w, jobs, results)
-		i = i + 1
-
+	for i := range jobs2 {
+		go worker(jobs2[i], jobs, results)
 	}
-	close(results)
-	var sum int32 = 0
+
+	var sum int32
 
 	for r := range results {
 		sum += int32(r)
-
 	}
 
 	fmt.Println(sum)
