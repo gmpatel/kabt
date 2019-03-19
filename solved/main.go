@@ -10,26 +10,19 @@ func main() {
 	defer close(results)
 
 	go func() {
-		for i := 1; i <= 1000; i++ {
+		for i := 1; i <= 10; i++ {
 			if i%2 == 0 {
 				i += 99
 			}
-			fmt.Println("Pushing", i, "to the channel 'jobs'")
 			jobs <- i
 		}
 	}()
 
-	jobs2 := []int{}
-	for w := 1; w < 1000; w++ {
-		jobs2 = append(jobs2, w)
-	}
-
-	for i := range jobs2 {
-		go worker(jobs2[i], jobs, results)
+	for w := 1; w < 10; w++ {
+		go worker(jobs, results)
 	}
 
 	var sum int32
-
 	for r := range results {
 		sum += int32(r)
 	}
@@ -37,9 +30,9 @@ func main() {
 	fmt.Println(sum)
 }
 
-func worker(id int, jobs <-chan int, results chan<- int) {
-
+func worker(jobs <-chan int, results chan<- int) {
 	for j := range jobs {
+		fmt.Println("worker", j)
 		go func() {
 			switch j % 3 {
 			case 0:

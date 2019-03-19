@@ -70,7 +70,9 @@ defer close(results)
 
 * **`Problem & Why?`** What we are doing here is that with the `for w := 1; w < 1000; w++` loop we are generating 999 job ids and storing them to `jobs2` array and then looping again over the range of `jobs2` array and triggering `worker()` as `go routine` and passing that `jobs2` element value as `id` and we are not evenin using that `id` within `worker()` method when it is passed to it. So, looks like we just need one loop to create number of `workers` we need to create and we don't even need `id` OR `value of iterator` at all to be passed to the `worker()` method.
 
-* **`Solution`** is to remove the below block of code...
+* **`Solution`** can be something like this...
+
+`Remove the following block of code`
 
 ```
 jobs2 := []int{}
@@ -79,7 +81,7 @@ for w := 1; w < 1000; w++ {
 }
 ```
 
-And change,
+`And change the following block of code`
 
 ```
 for i := range jobs2 {
@@ -87,7 +89,7 @@ for i := range jobs2 {
 }
 ```
 
-To,
+`To`
 
 ```
 for w := 1; w < 1000; w++ {
@@ -95,15 +97,15 @@ for w := 1; w < 1000; w++ {
 }
 ```
 
-And also remove the `id` parameter from the `func worker()`.
+`And also remove the **id** parameter from the **func worker()**`
 
-From,
+`From`,
 
 ```
 func worker(id int, jobs <-chan int, results chan<- int)
 ```
 
-To,
+`To`
 
 ```
 func worker(jobs <-chan int, results chan<- int)
